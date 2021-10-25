@@ -14,7 +14,7 @@ public class Book {
     private String title;
 
     @ManyToMany
-    private Author author;
+    private List<Author> authors;
 
     @OneToMany
     private List<Genre> genres;
@@ -24,10 +24,10 @@ public class Book {
 
     public Book() {}
 
-    public Book(Long id, String title, Author author, List<Genre> genres, int pages) {
+    public Book(Long id, String title, List<Author> authors, List<Genre> genres, int pages) {
         this.id = id;
         this.title = title;
-        this.author = author;
+        this.authors = authors;
         this.genres = genres;
         this.pages = pages;
     }
@@ -48,12 +48,12 @@ public class Book {
         this.title = title;
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<Author> getAuthor() {
+        return authors;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthor(List<Author> authors) {
+        this.authors = authors;
     }
 
     public List<Genre> getGenres() {

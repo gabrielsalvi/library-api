@@ -20,17 +20,13 @@ public class Author {
     @Column
     private LocalDate birthdate;
 
-    @ManyToMany
-    private List<Book> books;
-
     public Author() {}
 
-    public Author(Long id, String name, String citizenship, LocalDate birthdate, List<Book> books) {
+    public Author(Long id, String name, String citizenship, LocalDate birthdate) {
         this.id = id;
         this.name = name;
         this.citizenship = citizenship;
         this.birthdate = birthdate;
-        this.books = books;
     }
 
     public Long getId() {
@@ -63,13 +59,5 @@ public class Author {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 }
