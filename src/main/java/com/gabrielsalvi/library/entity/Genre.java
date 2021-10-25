@@ -1,11 +1,18 @@
 package com.gabrielsalvi.library.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Genre {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String genre;
 
+    @Column
     private String description;
 
     public Genre() {}

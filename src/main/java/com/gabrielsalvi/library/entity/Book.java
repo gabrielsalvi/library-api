@@ -1,24 +1,34 @@
 package com.gabrielsalvi.library.entity;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @ManyToMany
     private Author author;
 
-    private Genre genre;
+    @OneToMany
+    private List<Genre> genres;
 
+    @Column
     private int pages;
 
     public Book() {}
 
-    public Book(Long id, String title, Author author, Genre genre, int pages) {
+    public Book(Long id, String title, Author author, List<Genre> genres, int pages) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.genre = genre;
+        this.genres = genres;
         this.pages = pages;
     }
 
@@ -46,12 +56,12 @@ public class Book {
         this.author = author;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenre(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public int getPages() {
