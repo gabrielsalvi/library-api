@@ -1,8 +1,6 @@
 package com.gabrielsalvi.library.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Author {
@@ -18,11 +16,11 @@ public class Author {
     private String citizenship;
 
     @Column
-    private LocalDate birthdate;
+    private String birthdate;
 
     public Author() {}
 
-    public Author(Long id, String name, String citizenship, LocalDate birthdate) {
+    public Author(Long id, String name, String citizenship, String birthdate) {
         this.id = id;
         this.name = name;
         this.citizenship = citizenship;
@@ -53,11 +51,11 @@ public class Author {
         this.citizenship = citizenship;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 }
