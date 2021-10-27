@@ -1,6 +1,7 @@
 package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Book;
+import com.gabrielsalvi.library.exception.BookNotFoundException;
 import com.gabrielsalvi.library.repository.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,13 @@ public class BookController {
     @GetMapping
     public List<Book> listBooks() {
         return bookRepository.findAll();
+    }
+
+    @GetMapping("/{title}")
+    public Book findByTitle(@PathVariable String title) throws BookNotFoundException {
+        Book book =  bookRepository.findByTitle(title).orElseThrow(() -> new BookNotFoundException(title));
+
+        return book;
     }
 
 }
