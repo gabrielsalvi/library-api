@@ -5,6 +5,7 @@ import com.gabrielsalvi.library.repository.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -21,4 +22,10 @@ public class BookController {
     public Book createBook(@RequestBody @Valid Book book) {
         return bookRepository.save(book);
     }
+
+    @GetMapping
+    public List<Book> listBooks() {
+        return bookRepository.findAll();
+    }
+
 }
