@@ -37,7 +37,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public void updateById(@PathVariable Long id, @RequestBody @Valid Book book) throws BookNotFoundException{
+    public void updateById(@PathVariable Long id, @RequestBody @Valid Book book) throws BookNotFoundException {
         Book bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 
         bookToUpdate.setTitle(book.getTitle());
@@ -46,6 +46,13 @@ public class BookController {
         bookToUpdate.setPages(book.getPages());
 
         bookRepository.save(bookToUpdate);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) throws BookNotFoundException {
+        Book bookToDelete = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+
+        bookRepository.delete(bookToDelete);
     }
 
 }
