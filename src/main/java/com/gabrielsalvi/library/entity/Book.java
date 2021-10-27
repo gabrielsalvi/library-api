@@ -13,10 +13,10 @@ public class Book {
     @Column(nullable = false)
     private String title;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Author> authors;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Genre> genres;
 
     @Column
@@ -48,11 +48,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthor() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthor(List<Author> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
