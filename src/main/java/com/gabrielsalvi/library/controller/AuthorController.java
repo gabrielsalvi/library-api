@@ -2,10 +2,10 @@ package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Author;
 import com.gabrielsalvi.library.repository.AuthorRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,5 +21,11 @@ public class AuthorController {
     @GetMapping
     public List<Author> listAuthors() {
         return authorRepository.findAll();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Author createAuthor(@RequestBody @Valid Author author) {
+        return authorRepository.save(author);
     }
 }
