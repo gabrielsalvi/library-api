@@ -49,4 +49,11 @@ public class AuthorController {
         return authorToUpdate;
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) throws AuthorNotFoundException {
+        Author authorToDelete = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
+
+        authorRepository.delete(authorToDelete);
+    }
+
 }
