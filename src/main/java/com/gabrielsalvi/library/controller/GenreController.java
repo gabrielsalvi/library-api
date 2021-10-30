@@ -30,6 +30,13 @@ public class GenreController {
         return genreRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Genre findById(@PathVariable Long id) throws GenreNotFoundException{
+        Genre genre = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
+
+        return genre;
+    }
+
     @PutMapping("/{id}")
     public void updateById(@PathVariable Long id, @RequestBody @Valid Genre genre) throws GenreNotFoundException{
         Genre genreToUpdate = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
