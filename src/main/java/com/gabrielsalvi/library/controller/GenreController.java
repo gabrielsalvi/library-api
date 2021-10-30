@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/genre")
@@ -21,5 +22,10 @@ public class GenreController {
     @ResponseStatus(HttpStatus.CREATED)
     public Genre createGenre(@RequestBody @Valid Genre genre) {
         return genreRepository.save(genre);
+    }
+
+    @GetMapping
+    public List<Genre> listGenres() {
+        return genreRepository.findAll();
     }
 }
