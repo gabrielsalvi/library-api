@@ -35,4 +35,18 @@ public class AuthorController {
     public Author findById(@PathVariable Long id) throws AuthorNotFoundException {
         return authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
     }
+
+    @PutMapping("/{id}")
+    public Author updateById(@PathVariable Long id, @RequestBody @Valid Author author) throws AuthorNotFoundException {
+        Author authorToUpdate = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
+
+        authorToUpdate.setName(author.getName());
+        authorToUpdate.setBirthdate(author.getBirthdate());
+        authorToUpdate.setCitizenship(author.getCitizenship());
+
+        authorRepository.save(authorToUpdate);
+
+        return authorToUpdate;
+    }
+
 }
