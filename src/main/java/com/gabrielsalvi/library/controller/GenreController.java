@@ -39,4 +39,11 @@ public class GenreController {
 
         genreRepository.save(genreToUpdate);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) throws GenreNotFoundException{
+        Genre genreToDelete = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
+
+        genreRepository.delete(genreToDelete);
+    }
 }
