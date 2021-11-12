@@ -29,9 +29,9 @@ public class BookController {
         return bookRepository.findAll();
     }
 
-    @GetMapping("/{title}")
-    public Book findByTitle(@PathVariable String title) throws BookNotFoundException {
-        Book book =  bookRepository.findByTitle(title).orElseThrow(() -> new BookNotFoundException(title));
+    @GetMapping("/{id}")
+    public Book findById(@PathVariable Long id) throws BookNotFoundException {
+        Book book =  bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 
         return book;
     }
