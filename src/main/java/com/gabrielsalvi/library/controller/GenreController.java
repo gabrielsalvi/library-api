@@ -2,7 +2,7 @@ package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Genre;
 import com.gabrielsalvi.library.exception.GenreNotFoundException;
-import com.gabrielsalvi.library.repository.GenreRepository;
+import com.gabrielsalvi.library.service.GenreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,44 +13,35 @@ import java.util.List;
 @RequestMapping("/api/genres")
 public class GenreController {
 
-    private GenreRepository genreRepository;
+    private GenreService genreService;
 
-    public GenreController(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Genre createGenre(@RequestBody @Valid Genre genre) {
-        return genreRepository.save(genre);
+        return genreService.create(genre);
     }
 
     @GetMapping
     public List<Genre> listGenres() {
-        return genreRepository.findAll();
+        return genreService.listAll();
     }
 
     @GetMapping("/{id}")
     public Genre findById(@PathVariable Long id) throws GenreNotFoundException{
-        Genre genre = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
-
-        return genre;
+        return genreService.findById(id);
     }
 
     @PutMapping("/{id}")
     public void updateById(@PathVariable Long id, @RequestBody @Valid Genre genre) throws GenreNotFoundException{
-        Genre genreToUpdate = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
-
-        genreToUpdate.setGenre(genre.getGenre());
-        genreToUpdate.setDescription(genre.getDescription());
-
-        genreRepository.save(genreToUpdate);
+        genreService.update(id, genre);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) throws GenreNotFoundException{
-        Genre genreToDelete = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
-
-        genreRepository.delete(genreToDelete);
+        genreService.deleteById(id);
     }
 }
