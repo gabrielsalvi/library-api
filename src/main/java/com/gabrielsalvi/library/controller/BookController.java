@@ -3,6 +3,7 @@ package com.gabrielsalvi.library.controller;
 import com.gabrielsalvi.library.entity.Book;
 import com.gabrielsalvi.library.exception.BookNotFoundException;
 import com.gabrielsalvi.library.repository.BookRepository;
+import com.gabrielsalvi.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -12,47 +13,36 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Book createBook(@RequestBody @Valid Book book) {
-        return bookRepository.save(book);
+        return bookService.create(book);
     }
 
     @GetMapping
     public List<Book> listBooks() {
-        return bookRepository.findAll();
+        return bookService.listAll();
     }
 
     @GetMapping("/{id}")
     public Book findById(@PathVariable Long id) throws BookNotFoundException {
-        Book book =  bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-
-        return book;
+        return bookService.findById(id);
     }
 
     @PutMapping("/{id}")
     public void updateById(@PathVariable Long id, @RequestBody @Valid Book book) throws BookNotFoundException {
-        Book bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-
-        bookToUpdate.setTitle(book.getTitle());
-        bookToUpdate.setGenres(book.getGenres());
-        bookToUpdate.setAuthors(book.getAuthors());
-        bookToUpdate.setPages(book.getPages());
-
-        bookRepository.save(bookToUpdate);
+        bookService.update(id, book);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws BookNotFoundException {
-        Book bookToDelete = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-
-        bookRepository.delete(bookToDelete);
+        bookService.delete(id);
     }
-
 }
