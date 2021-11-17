@@ -2,8 +2,7 @@ package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Author;
 import com.gabrielsalvi.library.exception.AuthorNotFoundException;
-import com.gabrielsalvi.library.exception.BookNotFoundException;
-import com.gabrielsalvi.library.repository.AuthorRepository;
+import com.gabrielsalvi.library.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,46 +13,35 @@ import java.util.List;
 @RequestMapping("/api/authors")
 public class AuthorController {
 
-    private AuthorRepository authorRepository;
+    private AuthorService authorService;
 
-    public AuthorController(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
-
-    @GetMapping
-    public List<Author> listAuthors() {
-        return authorRepository.findAll();
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Author createAuthor(@RequestBody @Valid Author author) {
-        return authorRepository.save(author);
+        return authorService.create(author);
+    }
+
+    @GetMapping
+    public List<Author> listAuthors() {
+        return authorService.listAll();
     }
 
     @GetMapping("/{id}")
     public Author findById(@PathVariable Long id) throws AuthorNotFoundException {
-        return authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
+        return authorService.findById(id);
     }
 
     @PutMapping("/{id}")
     public Author updateById(@PathVariable Long id, @RequestBody @Valid Author author) throws AuthorNotFoundException {
-        Author authorToUpdate = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-
-        authorToUpdate.setName(author.getName());
-        authorToUpdate.setBirthdate(author.getBirthdate());
-        authorToUpdate.setCitizenship(author.getCitizenship());
-
-        authorRepository.save(authorToUpdate);
-
-        return authorToUpdate;
+        return authorService.update(id, author);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) throws AuthorNotFoundException {
-        Author authorToDelete = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-
-        authorRepository.delete(authorToDelete);
+        authorService.delete(id);
     }
-
 }
