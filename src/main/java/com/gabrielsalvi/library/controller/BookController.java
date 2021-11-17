@@ -2,10 +2,10 @@ package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Book;
 import com.gabrielsalvi.library.exception.BookNotFoundException;
-import com.gabrielsalvi.library.repository.BookRepository;
 import com.gabrielsalvi.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 

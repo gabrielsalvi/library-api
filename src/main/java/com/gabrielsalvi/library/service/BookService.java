@@ -4,10 +4,7 @@ import com.gabrielsalvi.library.entity.Book;
 import com.gabrielsalvi.library.exception.BookNotFoundException;
 import com.gabrielsalvi.library.repository.BookRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -28,9 +25,7 @@ public class BookService {
     }
 
     public Book findById(Long id) throws BookNotFoundException {
-        Book book =  bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-
-        return book;
+        return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
     public void update(Long id, Book book) throws BookNotFoundException {
@@ -44,7 +39,7 @@ public class BookService {
         bookRepository.save(bookToUpdate);
     }
 
-    public void delete(@PathVariable Long id) throws BookNotFoundException {
+    public void delete(Long id) throws BookNotFoundException {
         Book bookToDelete = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 
         bookRepository.delete(bookToDelete);
