@@ -1,6 +1,7 @@
 package com.gabrielsalvi.library.service;
 
 import com.gabrielsalvi.library.entity.Author;
+import com.gabrielsalvi.library.entity.Book;
 import com.gabrielsalvi.library.exception.AuthorNotFoundException;
 import com.gabrielsalvi.library.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ import java.util.List;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final BookService bookService;
 
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, BookService bookService) {
         this.authorRepository = authorRepository;
+        this.bookService = bookService;
     }
 
     public Author create(Author author) {
@@ -44,5 +47,11 @@ public class AuthorService {
         Author authorToDelete = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
 
         authorRepository.delete(authorToDelete);
+    }
+
+    public List<Book> listBooksOfTheAuthor(Long id) throws AuthorNotFoundException {
+        authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
+
+        return bookService.getBooksOfTheAuthor(id);
     }
 }

@@ -44,4 +44,8 @@ public class BookService {
 
         bookRepository.delete(bookToDelete);
     }
+
+    public List<Book> getBooksOfTheAuthor(Long authorId) {
+        return bookRepository.getBooksOfTheAuthor(authorId);
+    }
 }

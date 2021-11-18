@@ -1,6 +1,7 @@
 package com.gabrielsalvi.library.controller;
 
 import com.gabrielsalvi.library.entity.Author;
+import com.gabrielsalvi.library.entity.Book;
 import com.gabrielsalvi.library.exception.AuthorNotFoundException;
 import com.gabrielsalvi.library.service.AuthorService;
 import org.springframework.http.HttpStatus;
@@ -43,5 +44,10 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) throws AuthorNotFoundException {
         authorService.delete(id);
+    }
+
+    @GetMapping("/{id}/books")
+    public List<Book> getBooksOfTheAuthor(@PathVariable Long id) throws AuthorNotFoundException {
+        return authorService.listBooksOfTheAuthor(id);
     }
 }
